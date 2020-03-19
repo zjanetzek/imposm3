@@ -33,6 +33,8 @@ type GeneralizedTableSpec struct {
 	SourceGeneralized *GeneralizedTableSpec
 	Tolerance         float64
 	Where             string
+	Simplify          string
+	SimplifyValidated string
 	created           bool
 	Generalizations   []*GeneralizedTableSpec
 }
@@ -173,6 +175,8 @@ func NewGeneralizedTableSpec(pg *PostGIS, t *config.GeneralizedTable) *Generaliz
 		Schema:     pg.Config.ImportSchema,
 		Tolerance:  t.Tolerance,
 		Where:      t.SQLFilter,
+		Simplify:   t.SQLSimplify,
+		SimplifyValidated:   t.SQLSimplifyValidated,
 		SourceName: t.SourceTableName,
 	}
 	return &spec

@@ -40,10 +40,12 @@ type Table struct {
 
 type GeneralizedTables map[string]*GeneralizedTable
 type GeneralizedTable struct {
-	Name            string
-	SourceTableName string  `yaml:"source"`
-	Tolerance       float64 `yaml:"tolerance"`
-	SQLFilter       string  `yaml:"sql_filter"`
+	Name                 string
+	SourceTableName      string  `yaml:"source"`
+	Tolerance            float64 `yaml:"tolerance"`
+	SQLFilter            string  `yaml:"sql_filter"`
+	SQLSimplify          string  `yaml:"sql_simplify"`
+	SQLSimplifyValidated string  `yaml:"sql_simplify_validated"`
 }
 
 type Filters struct {
