@@ -45,10 +45,16 @@ func (t *geometryType) PrepareInsertSQL(i int, spec *TableSpec) string {
 
 func (t *geometryType) GeneralizeSQL(colSpec *ColumnSpec, spec *GeneralizedTableSpec) string {
 	if (spec.Simplify == ``) {
+		log.Printf("[warn] validated_geometry %s", fmt.Sprintf(`ST_Simplify("%s", %f) as "%s"`,
+			colSpec.Name, spec.Tolerance, colSpec.Name,
+		))
 		return fmt.Sprintf(`ST_Simplify("%s", %f) as "%s"`,
 			colSpec.Name, spec.Tolerance, colSpec.Name,
 		)
 	}
+	log.Printf("[warn] validated_geometry %s", fmt.Sprintf(spec.Simplify + `("%s", %f) as "%s"`,
+		colSpec.Name, spec.Tolerance, colSpec.Name,
+	))
 	return fmt.Sprintf(spec.Simplify + `("%s", %f) as "%s"`,
 		colSpec.Name, spec.Tolerance, colSpec.Name,
 	)
@@ -64,10 +70,16 @@ func (t *validatedGeometryType) GeneralizeSQL(colSpec *ColumnSpec, spec *General
 		log.Printf("[warn] validated_geometry column returns polygon geometries for %s", spec.FullName)
 	}
 	if (spec.SimplifyValidated == ``) {
+		log.Printf("[warn] validated_geometry %s", fmt.Sprintf(`ST_Buffer(ST_SimplifyPreserveTopology("%s", %f), 0) as "%s"`,
+			colSpec.Name, spec.Tolerance, colSpec.Name,
+		))
 		return fmt.Sprintf(`ST_Buffer(ST_SimplifyPreserveTopology("%s", %f), 0) as "%s"`,
 			colSpec.Name, spec.Tolerance, colSpec.Name,
 		)
 	}
+	log.Printf("[warn] validated_geometry %s", fmt.Sprintf(spec.SimplifyValidated + `("%s", %f) as "%s"`,
+		colSpec.Name, spec.Tolerance, colSpec.Name,
+	))
 	return fmt.Sprintf(spec.SimplifyValidated + `("%s", %f) as "%s"`,
 		colSpec.Name, spec.Tolerance, colSpec.Name,
 	)
